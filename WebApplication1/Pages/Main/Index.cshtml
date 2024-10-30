@@ -1,0 +1,66 @@
+﻿@page
+@model WebApplication1.Pages.Main.IndexModel
+@{
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Dashboard</h2>
+
+    <!-- Row for summary cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text">@Model.TotalUsers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Sales</h5>
+                    <p class="card-text">$@Model.TotalSales</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Orders</h5>
+                    <p class="card-text">@Model.PendingOrders</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Entries Table -->
+    <div class="card">
+        <div class="card-header">
+            Recent Entries
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in Model.RecentEntries)
+                    {
+                        <tr>
+                            <td>@entry.Id</td>
+                            <td>@entry.Name</td>
+                            <td>@entry.Date.ToShortDateString()</td>
+                            <td>@entry.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

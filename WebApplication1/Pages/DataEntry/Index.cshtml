@@ -1,0 +1,128 @@
+﻿@page
+@model WebApplication1.Pages.DataEntry.IndexModel
+@{
+}
+
+<div>
+    <!-- Header -->
+    <div class="bg-success text-white p-3 content-wrapper">
+        <h3 class="mb-0">Tasklist Data Entry</h3>
+    </div>
+
+    <!-- Form dan Tabel -->
+    <div class="p-4">
+        <div class="row">
+            <!-- Kolom Kiri -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="namaPemohon" class="form-label">Nama Pemohon</label>
+                    <input type="text" id="namaPemohon" class="form-control" placeholder="Nama Pemohon">
+                </div>
+                <div class="mb-3">
+                    <label for="tanggalStart" class="form-label">Tanggal - Aplikasi Start</label>
+                    <input type="date" id="tanggalStart" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="cabang" class="form-label">Cabang</label>
+                    <input type="text" id="cabang" class="form-control" placeholder="Cabang">
+                </div>
+            </div>
+
+            <!-- Kolom Kanan -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="noKtp" class="form-label">No. KTP</label>
+                    <input type="text" id="noKtp" class="form-control" placeholder="No. KTP">
+                </div>
+                <div class="mb-3">
+                    <label for="tanggalEnd" class="form-label">Tanggal Aplikasi - End Date</label>
+                    <input type="date" id="tanggalEnd" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tombol Cari dan Hapus -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <button class="btn btn-outline-success w-100">Cari</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-outline-danger w-100">Hapus</button>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <button class="btn btn-success w-100" onclick="window.location.href='/DataEntry/Create'">Create Data Entry</button>
+            </div>
+        </div>
+
+        <!-- Tabel Data Entry -->
+        <div class="table-responsive mt-1">
+            <table class="table table-bordered table-striped table-hover text-center">
+                <thead class="bg-warning">
+                    <tr>
+                        <th>Nama Pemohon</th>
+                        <th>No Aplikasi</th>
+                        <th>Ktp</th>
+                        <th>Tanggal Aplikasi</th>
+                        <th>Cabang</th>
+                        <th>Nama AO</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dataEntry in Model.ListDataEntry)
+                    {
+                        <tr>
+                            <td>@dataEntry.Nama</td>
+                            <td>@dataEntry.NoHP</td>
+                            <td>@dataEntry.KTPFileName</td>
+                            <td>@dataEntry.TanggalLahir.ToString("dd/MM/yyyy")</td>
+                            <td>@dataEntry.Cabang</td>
+                            <td>@dataEntry.Nama</td>
+                            <td style="white-space:nowrap">
+                                <a class="btn btn-primary btn-sm" href="/DataEntry/Detail?id=@dataEntry.Id">Edit</a>
+                                <button class="btn btn-danger btn-sm" onclick="showConfirmDeleteModal('/DataEntry/Delete?id=@dataEntry.Id')">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus entri ini?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let deleteUrl = '';
+
+    function showConfirmDeleteModal(url) {
+        deleteUrl = url; // Simpan URL untuk penghapusan
+        // Tampilkan modal
+        $('#confirmDeleteModal').modal('show');
+    }
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+        // Jika pengguna mengonfirmasi, arahkan ke URL
+        window.location.href = deleteUrl;
+    });
+</script>

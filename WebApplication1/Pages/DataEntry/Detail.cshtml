@@ -1,0 +1,440 @@
+﻿@page
+@model WebApplication1.Pages.DataEntry.EditModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Nasabah</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h4 {
+            color: white;
+            text-align: center;
+            padding: 10px;
+            background-color: #28a745;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .button-submit {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button-submit:hover {
+            background-color: darkgreen;
+        }
+
+        /* Styling untuk tampilan default */
+        .hover-text {
+            position: relative;
+            overflow: hidden;
+        }
+
+            /* Mengganti teks saat hover */
+            .hover-text:hover::after {
+                content: "Download"; /* Teks baru saat hover */
+                position: absolute;
+                color: white;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(0, 0, 0, 0.75); /* Latar belakang semi-transparan */
+            }
+
+            /* Menyembunyikan teks asli saat hover */
+            .hover-text:hover {
+                color: transparent;
+            }
+
+            /* Styling header tabel dengan warna hijau */
+            .table-header {
+                background-color: #28a745; /* Warna hijau untuk header utama */
+                color: white;
+            }
+            /* Warna hijau muda untuk header kolom */
+            .table-subheader {
+                background-color: #d1e7dd;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5 mb-5">
+        <h4>Edit Data Nasabah</h4>
+
+        @if (Model.errorMessage.Length > 0)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>@Model.errorMessage</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (Model.successMessage.Length > 0)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>@Model.successMessage</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nama*</label>
+                    <input class="form-control" asp-for="DataEntryDto.Nama" placeholder="Masukan Nama"/>
+                    <span asp-validation-for="DataEntryDto.Nama" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">NIK*</label>
+                    <input class="form-control" asp-for="DataEntryDto.NIK" placeholder="Masukan NIK"/>
+                    <span asp-validation-for="DataEntryDto.NIK" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">Tempat Lahir*</label>
+                    <input class="form-control" asp-for="DataEntryDto.TempatLahir" placeholder="Masukan Tempat Lahir"/>
+                    <span asp-validation-for="DataEntryDto.TempatLahir" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tanggal Lahir*</label>
+                    <input class="form-control" asp-for="DataEntryDto.TanggalLahir" type="date"/>
+                    <span asp-validation-for="DataEntryDto.TanggalLahir" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Jenis Kelamin*</label>
+                <select class="form-select" asp-for="DataEntryDto.JenisKelamin">
+                    <option value="">-- Pilih --</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Alamat Lengkap*</label>
+                <textarea class="form-control" asp-for="DataEntryDto.AlamatLengkap" placeholder="Masukan Alamat Lengkap" rows="3"></textarea>
+                <span asp-validation-for="DataEntryDto.AlamatLengkap" class="text-danger"></span>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">Kelurahan*</label>
+                    <input class="form-control" asp-for="DataEntryDto.Kelurahan" placeholder="Masukan Kelurahan"/>
+                    <span asp-validation-for="DataEntryDto.Kelurahan" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Kecamatan*</label>
+                    <input class="form-control" asp-for="DataEntryDto.Kecamatan" placeholder="Masukan Kecamatan"/>
+                    <span asp-validation-for="DataEntryDto.Kecamatan" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">Kabupaten*</label>
+                    <input class="form-control" asp-for="DataEntryDto.Kabupaten" type="text" placeholder="Masukan Kabupaten"/>
+                    <span asp-validation-for="DataEntryDto.Kabupaten" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Provinsi*</label>
+                    <input class="form-control" asp-for="DataEntryDto.Provinsi" placeholder="Masukan Provinsi"/>
+                    <span asp-validation-for="DataEntryDto.Provinsi" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">Kode Pos*</label>
+                    <input class="form-control" asp-for="DataEntryDto.KodePos" placeholder="Masukan Kode Pos"/>
+                    <span asp-validation-for="DataEntryDto.KodePos" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">No. HP*</label>
+                    <div class="input-group">
+                        <span class="input-group-text">+62</span>
+                        <input class="form-control" asp-for="DataEntryDto.NoHP" placeholder="Masukan Nomor Handphone"/>
+                    </div>
+                    <span asp-validation-for="DataEntryDto.NoHP" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">No. Rek Tabungan*</label>
+                    <input class="form-control" asp-for="DataEntryDto.NoRekeningTabungan" placeholder="Masukan No Rekening"/>
+                    <span asp-validation-for="DataEntryDto.NoRekeningTabungan" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Alamat Email</label>
+                    <input class="form-control" asp-for="DataEntryDto.AlamatEmail" type="email" placeholder="Masukan Email" />
+                    <span asp-validation-for="DataEntryDto.AlamatEmail" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4 border border-dark mt-4 ml-2 p-3">
+                    <div class="position-relative text-center">
+                        <a href="@Url.Content("~/img/storage/" + Model.DataEntry.KTPFileName)" download
+                           class="position-absolute w-100 text-white text-decoration-none bg-dark bg-opacity-75 py-1 d-flex align-items-center justify-content-center hover-text"
+                           style="top: 0; left: 0; transition: background-color 0.3s, color 0.3s;">
+                            KTP
+                        </a>
+
+                        <img src="/img/storage/@Model.DataEntry.KTPFileName" class="img-thumbnail w-100 mt-2" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Upload KTP*</label>
+                <input class="form-control" asp-for="DataEntryDto.KTPFile" type="file"/>
+                <span asp-validation-for="DataEntryDto.KTPFile" class="text-danger"></span>
+            </div>
+
+            <h4 class="mt-3">Informasi Permohonan</h4>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Jumlah Penghasilan*</label>
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                        <input class="form-control" asp-for="DataEntryDto.JumlahPenghasilan" placeholder="Masukan Penghasilan"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Jumlah Penghasilan Lainnya*</label>
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                        <input class="form-control" asp-for="DataEntryDto.JumlahPenghasilanLainnya" placeholder="Masukan Jumlah"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Jumlah Permohonan*</label>
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                        <input class="form-control" asp-for="DataEntryDto.JumlahPermohonan" placeholder="Masukan Jumlah"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Jangka Waktu*</label>
+                    <input class="form-control" asp-for="DataEntryDto.JangkaWaktu" placeholder="Jangka Waktu"/>
+                    <span asp-validation-for="DataEntryDto.JangkaWaktu" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Maksimal Hasil Pembiayaan yang dapat diajukan*</label>
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                        <input class="form-control" asp-for="DataEntryDto.MaksimalPermohonan" placeholder="Masukan Jumlah"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tujuan Pembiayaan*</label>
+                    <input class="form-control" asp-for="DataEntryDto.TujuanPembiayaan"/>
+                    <span asp-validation-for="DataEntryDto.TujuanPembiayaan" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Status Perkawinan*</label>
+                <select class="form-select" asp-for="DataEntryDto.StatusPerkawinan">
+                    <option value="">-- Pilih --</option>
+                    <option value="Menikah">Menikah</option>
+                    <option value="Single">Single</option>
+                </select>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4 border border-dark mt-4 ml-2 p-3">
+                    <div class="position-relative text-center">
+                        <a href="@Url.Content("~/img/storage/" + Model.DataEntry.NPWPFileName)" download
+                           class="position-absolute w-100 text-white text-decoration-none bg-dark bg-opacity-75 py-1 d-flex align-items-center justify-content-center hover-text"
+                           style="top: 0; left: 0; transition: background-color 0.3s, color 0.3s;">
+                            NPWP
+                        </a>
+
+                        <img src="/img/storage/@Model.DataEntry.NPWPFileName" class="img-thumbnail w-100 mt-2" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Upload NPWP*</label>
+                <input class="form-control" asp-for="DataEntryDto.NPWPFile" type="file"/>
+                <span asp-validation-for="DataEntryDto.NPWPFile" class="text-danger"></span>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4 border border-dark mt-4 ml-2 p-3">
+                    <div class="position-relative text-center">
+                        <a href="@Url.Content("~/img/storage/" + Model.DataEntry.SlipGajiFileName)" download
+                           class="position-absolute w-100 text-white text-decoration-none bg-dark bg-opacity-75 py-1 d-flex align-items-center justify-content-center hover-text"
+                           style="top: 0; left: 0; transition: background-color 0.3s, color 0.3s;">
+                            Slip Gaji
+                        </a>
+
+                        <img src="/img/storage/@Model.DataEntry.SlipGajiFileName" class="img-thumbnail w-100 mt-2" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Upload Sli Gaji*</label>
+                <input class="form-control" asp-for="DataEntryDto.SlipGajiFile" type="file"/>
+                <span asp-validation-for="DataEntryDto.SlipGajiFile" class="text-danger"></span>
+            </div>
+
+            <h4 class="mt-3">Informasi Data Pekerjaan</h4>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nama Instansi*</label>
+                    <input class="form-control" asp-for="DataEntryDto.NamaInstansi" placeholder="Masukan Nama Instansi"/>
+                    <span asp-validation-for="DataEntryDto.NamaInstansi" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">No Instansi*</label>
+                    <input class="form-control" asp-for="DataEntryDto.NoInstansi" placeholder="Masukan No Instansi"/>
+                    <span asp-validation-for="DataEntryDto.NoInstansi" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Golongan / Jabatan*</label>
+                    <input class="form-control" asp-for="DataEntryDto.Golongan" placeholder="Masukan golongan atau jabatan"/>
+                    <span asp-validation-for="DataEntryDto.Golongan" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">NIP*</label>
+                    <input class="form-control" asp-for="DataEntryDto.NIP" placeholder="Masukan NIP"/>
+                    <span asp-validation-for="DataEntryDto.NIP" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Masa Kerja*</label>
+                    <input class="form-control" asp-for="DataEntryDto.MasaKerja" type="date"/>
+                    <span asp-validation-for="DataEntryDto.MasaKerja" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Nama Atasan*</label>
+                    <input class="form-control" asp-for="DataEntryDto.NamaAtasan" placeholder="Masukan Nama Atasan"/>
+                    <span asp-validation-for="DataEntryDto.NamaAtasan" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Alamat Kantor*</label>
+                    <input class="form-control" asp-for="DataEntryDto.AlamatKantor" placeholder="Masukan Alamat Kantor"/>
+                    <span asp-validation-for="DataEntryDto.AlamatKantor" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-header text-white text-center" style="background-color: #28a745;">
+                        <h5>Dokumen Checklist</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="table-header text-center">
+                                    <th style="width: 5%;">No</th>
+                                    <th style="width: 45%;">Dokumen</th>
+                                    <th style="width: 10%;">Checklist</th>
+                                    <th style="width: 20%;">Upload</th>
+                                    <th style="width: 20%;">Download</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.DataEntry?.DokumenChecklists != null)
+                                {
+                                    foreach (var dokumen in Model.DataEntry.DokumenChecklists)
+                                    {
+                                        <tr>
+                                            <td>@dokumen.Position</td>
+                                            <td>@dokumen.DokumenName</td>
+                                            <td class="text-center"><input type="checkbox"></td>
+                                            <td>
+                                                <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+                                                    <!-- Setiap file input memiliki name yang unik, misalnya "File_Karpeg", "File_Taspen", dll. -->
+                                                    <input type="file" name="File_@dokumen.DokumenName" />
+                                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                                </form>
+                                            </td>
+                                            <td class="text-center"><button class="btn btn-light btn-sm">Download</button></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mt-3">Data Pengajuan Pembiayaan</h4>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Total Angsuran Pembiayaan*</label>
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                        <input class="form-control" asp-for="DataEntryDto.TotalAngsuran" placeholder="Masukan Jumlah"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Jangka Waktu*</label>
+                    <input class="form-control" asp-for="DataEntryDto.JangkaWaktu" placeholder="Jangka Waktu"/>
+                    <span asp-validation-for="DataEntryDto.JangkaWaktu" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="mt-3">
+                    <label class="form-label">Cabang*</label>
+                    <select class="form-select" asp-for="DataEntryDto.Cabang">
+                        <option value="">-- Pilih --</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Bandung">Bandung</option>
+                    </select>
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Capem*</label>
+                    <select class="form-select" asp-for="DataEntryDto.Capem">
+                        <option value="">-- Pilih --</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="button-submit mt-4">Simpan</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
